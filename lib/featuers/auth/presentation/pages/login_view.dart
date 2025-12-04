@@ -8,6 +8,7 @@ class LogInView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login View'),
+        
       ),
       body: Center(
         child: Text('This is the login view'),
