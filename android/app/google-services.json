@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "899355534784",
+    "project_id": "e7keely-42ed0",
+    "storage_bucket": "e7keely-42ed0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899355534784:android:e04649d4327fac553a5425",
+        "android_client_info": {
+          "package_name": "com.mdSoft.cubit_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRFaK-JkfbleoB8lV6gj__0BzZruQ8ivw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
