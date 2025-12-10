@@ -43,6 +43,8 @@ dependencies:
   easy_localization: ^3.0.8
   dartz: ^0.10.1
   firebase_core: ^4.2.1
+  firebase_auth:
+  cloud_firestore:
 
 
 

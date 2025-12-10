@@ -31,7 +31,7 @@ class AuthRepoImp implements AuthRepo {
   }) async {
     try {
       final user = await remoteDataSource.signIn(params: params);
-      await localDataSource.setUser(value: user);
+      await localDataSource.setUser( value: user);
       return Right(user);
     } catch (e) {
       return Left(FirebaseFailure(e.toString()));
