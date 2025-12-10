@@ -1,0 +1,17 @@
+import 'package:cubit_pro/core/error/failure.dart';
+import 'package:cubit_pro/core/use_case.dart';
+import 'package:cubit_pro/featuers/auth/data/models/model.dart';
+import 'package:cubit_pro/featuers/auth/data/repo/auth_repo.dart';
+import 'package:cubit_pro/featuers/auth/presentation/params/sign_in_params.dart.dart';
+import 'package:dartz/dartz.dart';
+
+class SignInUseCase  extends UseCase<UserModel,AuthParams>{
+  final AuthRepo authRepo;
+
+  SignInUseCase({required this.authRepo});
+  @override
+  Future<Either<Failure, UserModel>> call(AuthParams params) async{
+   return  await authRepo.signIn(params: params);
+  }
+
+}

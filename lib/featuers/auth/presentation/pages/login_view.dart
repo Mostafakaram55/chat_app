@@ -7,11 +7,11 @@ class LogInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login View'),
-      ),
+        title: Text('Login View')
+        ),
       body: Center(
-        child: Text('This is the login view'),
-      ),
+        child: Text('This is the login view')
+        ),
     );
   }
 }
