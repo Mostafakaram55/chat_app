@@ -52,6 +52,7 @@ class _SignUpViewState extends State<SignUpView> {
         }
       },
       builder: (context, state) {
+        final isLoading = state is SignUpLoadingState;
         return Scaffold(
           backgroundColor: AppColors.loginBackgroundColor,
           body: SafeArea(
@@ -71,14 +72,16 @@ class _SignUpViewState extends State<SignUpView> {
                       const SizedBox(height: 16),
                       Text(
                         'إنشاء حساب جديد',
-                        style: AppStyles.bold22(context)
-                            .copyWith(color: AppColors.primary),
+                        style: AppStyles.bold22(
+                          context,
+                        ).copyWith(color: AppColors.primary),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'املأ البيانات للمتابعة',
-                        style: AppStyles.regular16(context)
-                            .copyWith(color: AppColors.grey7A),
+                        style: AppStyles.regular16(
+                          context,
+                        ).copyWith(color: AppColors.grey7A),
                       ),
                       const SizedBox(height: 32),
                       _buildTextField(
@@ -117,6 +120,7 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                       const SizedBox(height: 16),
                       _buildTextField(
+                        type: TextInputType.phone,
                         controller: _phoneController,
                         label: 'رقم الهاتف',
                         hint: 'ادخل رقمك',
@@ -124,7 +128,7 @@ class _SignUpViewState extends State<SignUpView> {
                         obscureText: false,
                       ),
                       const SizedBox(height: 32),
-                      _buildSignUpButton(state is SignUpLoadingState),
+                      _buildSignUpButton(isLoading),
                       const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -139,8 +143,9 @@ class _SignUpViewState extends State<SignUpView> {
                             },
                             child: Text(
                               'تسجيل الدخول',
-                              style: AppStyles.semiBold16(context)
-                                  .copyWith(color: AppColors.primary),
+                              style: AppStyles.semiBold16(
+                                context,
+                              ).copyWith(color: AppColors.primary),
                             ),
                           ),
                         ],
@@ -162,6 +167,7 @@ class _SignUpViewState extends State<SignUpView> {
     required String hint,
     required IconData prefixIcon,
     bool obscureText = false,
+    TextInputType? type,
     Widget? suffixIcon,
   }) {
     return Column(
@@ -169,11 +175,11 @@ class _SignUpViewState extends State<SignUpView> {
       children: [
         Text(
           label,
-          style: AppStyles.medium14(context)
-              .copyWith(color: AppColors.black2A),
+          style: AppStyles.medium14(context).copyWith(color: AppColors.black2A),
         ),
         const SizedBox(height: 8),
         TextFormField(
+          keyboardType: type,
           controller: controller,
           obscureText: obscureText,
           style: AppStyles.regular16(context),
@@ -208,13 +214,13 @@ class _SignUpViewState extends State<SignUpView> {
             : () {
                 if (_formKey.currentState!.validate()) {
                   context.read<AuthCubit>().signUp(
-                        params: AuthParams(
-                          name: _nameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          phone: _phoneController.text,
-                        ),
-                      );
+                    params: AuthParams(
+                      name: _nameController.text,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      phone: _phoneController.text,
+                    ),
+                  );
                 }
               },
         style: ElevatedButton.styleFrom(
@@ -233,8 +239,7 @@ class _SignUpViewState extends State<SignUpView> {
                 width: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
                 ),
               )
             : Text('إنشاء الحساب', style: AppStyles.semiBold16(context)),

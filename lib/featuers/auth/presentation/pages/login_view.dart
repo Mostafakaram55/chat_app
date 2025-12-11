@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cubit_pro/config/routes/routes_name.dart';
 import 'package:cubit_pro/core/funcations/show_toast.dart';
@@ -38,7 +37,7 @@ class _LogInViewState extends State<LogInView> {
         params: AuthParams(
           email: _emailController.text.trim(),
           password: _passwordController.text,
-        ),
+        ),  
       );
     }
   }
