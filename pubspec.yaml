@@ -45,6 +45,7 @@ dependencies:
   firebase_core: ^4.2.1
   firebase_auth:
   cloud_firestore:
+  toastification: ^3.0.3
 
 
 

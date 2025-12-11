@@ -17,7 +17,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<UserModel> getCurrentUserId({required String userId}) {
     throw UnimplementedError();
   }
-
+ 
   @override
   Future<bool> isSignedIn() {
     throw UnimplementedError();
@@ -33,16 +33,13 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final doc = await firestore.collection("users").doc(user.uid).get();
     return UserModel.fromJson(doc.data()!);
   }
-
   @override
   Future<UserModel> signUp({required AuthParams params}) async {
     final credential = await firebaseAuth.createUserWithEmailAndPassword(
       email: params.email!,
       password: params.password!,
     );
-
     final user = credential.user!;
-
     final userModel = UserModel(
       uid: user.uid,
       name: params.name ?? "",

@@ -5,6 +5,7 @@ import 'package:cubit_pro/featuers/auth/data/models/model.dart';
 import 'package:cubit_pro/featuers/auth/data/repo/auth_repo.dart';
 import 'package:cubit_pro/featuers/auth/presentation/params/sign_in_params.dart.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepoImp implements AuthRepo {
   final RemoteDataSource remoteDataSource;
@@ -31,10 +32,10 @@ class AuthRepoImp implements AuthRepo {
   }) async {
     try {
       final user = await remoteDataSource.signIn(params: params);
-      await localDataSource.setUser( value: user);
+      await localDataSource.setUser(value: user);
       return Right(user);
-    } catch (e) {
-      return Left(FirebaseFailure(e.toString()));
+    } on FirebaseAuthException catch (e) {
+      return Left(FirebaseFailure.fromFirebaseException(e));
     }
   }
 
@@ -46,8 +47,8 @@ class AuthRepoImp implements AuthRepo {
       final user = await remoteDataSource.signUp(params: params);
       await localDataSource.setUser(value: user);
       return Right(user);
-    } catch (e) {
-      return Left(FirebaseFailure(e.toString()));
+    } on FirebaseAuthException catch (e) {
+      return Left(FirebaseFailure.fromFirebaseException(e));
     }
   }
 }

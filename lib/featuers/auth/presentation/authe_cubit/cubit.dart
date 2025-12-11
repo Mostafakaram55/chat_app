@@ -5,15 +5,15 @@ import 'package:cubit_pro/featuers/auth/presentation/params/sign_in_params.dart.
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
-  final SignInUseCase authUseCases;
+  final SignInUseCase signInUseCases;
   final SignUpUsecase signUpUsecase;
 
-  AuthCubit({required this.authUseCases, required this.signUpUsecase})
+  AuthCubit({required this.signInUseCases, required this.signUpUsecase})
     : super(AuthInitialState());
 
   Future<void> signIn({required AuthParams params}) async {
     emit(LoginLoadingState());
-    final result = await authUseCases.call(params);
+    final result = await signInUseCases.call(params);
     result.fold(
       (failure) {
         emit(LoginErrorState(error: failure.error));

@@ -9,3 +9,4 @@ abstract class AuthRepo {
   Future<bool> isSignedIn();
   Future<Either<Failure, UserModel>> getCurrentUserId({required String userId});
 }
+
