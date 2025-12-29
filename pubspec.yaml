@@ -46,6 +46,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   toastification: ^3.0.3
+  google_generative_ai: ^0.4.5
 
 
 

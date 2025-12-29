@@ -8,4 +8,5 @@ class Routes{
   static const String resetPasswordView = '/resetPasswordView';
   static const String homeView = '/homeView';
   static const String settingsView = '/settingsView';
+  static const String chatBotView = '/chatBotView';
 }
