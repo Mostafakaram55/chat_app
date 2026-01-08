@@ -1,29 +1,56 @@
-import 'package:cubit_pro/featuers/chat_bot/data_sor/gemini_service.dart';
+import 'dart:convert';
+
+import 'package:cubit_pro/featuers/chat_bot/data_sor/chat_service.dart';
 import 'package:cubit_pro/featuers/chat_bot/models/chat_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatCubit extends Cubit<List<Message>> {
-  final GeminiService service;
+  final ChatService service;
 
   ChatCubit(this.service) : super([]);
 
   void sendMessage(String text) async {
-    // 1. إضافة رسالة المستخدم
+    final currentHistory = List<Message>.from(state);
+
     emit([...state, Message(text: text, type: MessageType.user)]);
 
-    // 2. إضافة رسالة مؤقتة "جاري التفكير..."
     final typingMessage = Message(text: '...', type: MessageType.bot);
     emit([...state, typingMessage]);
 
-    // 3. استدعاء الخدمة
-    final botReply = await service.sendMessage(text);
+    final botReply = await service.sendMessage(text, currentHistory);
 
-    // 4. استبدال الرسالة المؤقتة بالرد الفعلي
     final newState = List<Message>.from(state);
-    if (newState.isNotEmpty && newState.last.text == '...') {
-      newState.removeLast();
+    newState.removeLast();
+
+    // 👇 كشف JSON
+    if (botReply.trim().startsWith('{')) {
+      try {
+        final decoded = jsonDecode(botReply);
+        newState.add(
+          Message(
+            text: decoded['reply'],
+            type: MessageType.bot,
+            options: List<String>.from(decoded['options']),
+          ),
+        );
+      } catch (_) {
+        newState.add(Message(text: botReply, type: MessageType.bot));
+      }
+    } else {
+      newState.add(Message(text: botReply, type: MessageType.bot));
     }
-    newState.add(Message(text: botReply, type: MessageType.bot));
+
     emit(newState);
+  }
+
+  void clearChat() {
+    emit([]);
+    service.isFirstMessage = true;
+  }
+
+  @override
+  Future<void> close() {
+    service.dispose();
+    return super.close();
   }
 }

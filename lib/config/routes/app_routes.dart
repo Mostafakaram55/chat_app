@@ -4,7 +4,7 @@ import 'package:cubit_pro/core/di/di.dart';
 import 'package:cubit_pro/featuers/auth/presentation/authe_cubit/cubit.dart';
 import 'package:cubit_pro/featuers/auth/presentation/pages/login_view.dart';
 import 'package:cubit_pro/featuers/auth/presentation/pages/sign_up.dart';
-import 'package:cubit_pro/featuers/chat_bot/data_sor/gemini_service.dart';
+import 'package:cubit_pro/featuers/chat_bot/data_sor/chat_service.dart';
 import 'package:cubit_pro/featuers/chat_bot/presentation/chat_screen.dart';
 import 'package:cubit_pro/featuers/chat_bot/presentation/controller/chat_cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,7 +69,7 @@ final GoRouter router = GoRouter(
         return CustomTransitionPage(
           key: state.pageKey,
           child: BlocProvider(
-            create: (context) => ChatCubit(GeminiService()),
+            create: (context) => ChatCubit(ChatService()),
             child: const ChatScreen(),
           ),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

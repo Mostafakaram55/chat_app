@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam dpi 120
+
+skinparam activity {
+  BackgroundColor #f8f9fa
+  BorderColor #343a40
+  ArrowColor #343a40
+  FontSize 13
+}
+
+start
+
+: TXT / DOCX Files\n(Platform Docs);
+
+: Document Ingestion\n(Parsing & Cleaning);
+
+: Multilingual Embeddings Model\n(AR / EN);
+
+: FAISS Vector Store\n(Semantic Search);
+
+floating note right
+  **User Question**
+  ← يدخل هنا
+end note
+
+: Relevant Chunks\nRetrieved;
+
+: Groq LLM\n(Answer Generation);
+
+fork
+  : **Textual Answer**\n(Arabic Reply);
+fork again
+  : **Function Calling**\n(Navigation / UI);
+end fork
+
+stop
+
+@enduml
