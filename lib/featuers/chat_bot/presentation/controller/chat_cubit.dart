@@ -9,20 +9,35 @@ class ChatCubit extends Cubit<List<Message>> {
 
   ChatCubit(this.service) : super([]);
 
+  /// إرسال رسالة ترحيبية عند بداية الشات
+  void sendWelcomeMessage() {
+    if (state.isEmpty) {
+      emit([
+        Message(
+          text:
+              'أهلاً بك! 👋\nأنا مساعدك الذكي في منصة التسويق عبر المؤثرين.\nكيف يمكنني مساعدتك اليوم؟',
+          type: MessageType.bot,
+        ),
+      ]);
+    }
+  }
+
   void sendMessage(String text) async {
     final currentHistory = List<Message>.from(state);
 
     emit([...state, Message(text: text, type: MessageType.user)]);
 
-    final typingMessage = Message(text: '...', type: MessageType.bot);
+    final typingMessage = Message(
+      text: '',
+      type: MessageType.bot,
+      isTyping: true,
+    );
     emit([...state, typingMessage]);
 
     final botReply = await service.sendMessage(text, currentHistory);
 
     final newState = List<Message>.from(state);
     newState.removeLast();
-
-    // 👇 كشف JSON
     if (botReply.trim().startsWith('{')) {
       try {
         final decoded = jsonDecode(botReply);
