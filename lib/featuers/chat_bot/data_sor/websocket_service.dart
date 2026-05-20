@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:cubit_pro/featuers/chat_bot/data_sor/chat_constants.dart';
+import 'package:cubit_pro/featuers/chat_bot/data_sor/websocket_config.dart';
 import 'package:cubit_pro/featuers/chat_bot/models/chat_model.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -22,7 +22,9 @@ class WebSocketService {
         return;
       }
 
-      _channel = WebSocketChannel.connect(Uri.parse(ChatConstants.wsUrl));
+      _channel = WebSocketChannel.connect(Uri.parse(WebSocketConfig.currentUrl));
+
+      await _channel!.ready;
 
       _isConnected = true;
       log('WebSocket connected successfully');

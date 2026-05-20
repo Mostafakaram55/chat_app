@@ -4,7 +4,6 @@ import 'package:cubit_pro/config/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-//final userHelper = UserHelper();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    //setup();
